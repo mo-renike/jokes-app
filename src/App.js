@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const jokeWrapper = document.querySelector(".joke");
+const button = document.querySelector(".joke-btn");
+
+async function getJoke() {
+  let config = {
+    headers: {
+      Accept: "application/JSON",
+    },
+  };
+  const resp = await fetch("https://icanhazdadjoke.com", config);
+  const data = await resp.json();
+  jokeWrapper.innerHTML = data.joke;
 }
+getJoke();
+
+
+const App = () => (
+  <div className='wrapper'>
+    <div className="jokeitem">
+    <h3>Get random Joke</h3>
+    <div className="joke">Jokes...</div>
+    <button onClick={getJoke} className="joke-btn">
+      Get another joke
+    </button>
+  </div>
+  </div>
+  
+);
 
 export default App;
